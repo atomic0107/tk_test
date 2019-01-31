@@ -25,6 +25,7 @@ prime_cnt = 50
 #f.close
 #print (json.dumps(jsonData, sort_keys = True, indent = 4))
 #dict = json.load(json_t)
+
 dict = {
     "mind":None,
     "net":None,
@@ -33,50 +34,50 @@ dict = {
     "tom":None
 }
 
-"""class mind():
+class mind():
     #コンストラクタ
-    def __init__(self,panel,text):
+    def __init__(self):
         self.x = center_x
         self.y = center_y
         self.textobj_list = []
         self.textbox_list = []
         self.textbox_cnt = 0
-        self.panel = panel
-        self.panel.Bind(wx.EVT_LEFT_DOWN, self.click_panel)
-        print(dict)
-        self.dict_list = list(dict.keys())
-        dict_len = len(self.dict_list)
-   """
+        #self.panel = panel
+        #self.panel.Bind(wx.EVT_LEFT_DOWN, self.click_panel)
+        root = tkinter.Tk()
 
-# 移動-
-def rect_drag(event):
-    c1 = event.widget
-    x = event.x
-    y = event.y
-    c1.coords(id, x - 5, y - 5, x + 5, y + 5)
+        frame = tkinter.Frame(root, width=bd_width, height=50)
+        frame.bind("<Tab>", self.callback)#マウスポインタ-がwidgetに入ったとき
+        frame.pack()
 
-def move_rect(event):
-    c2 = event.widget
-    x = event.x
-    y = event.y
-    c2.coords(id, x - 5, y - 5, x + 5, y + 5)
 
-def callback(event):
-    print("callback")
+        self.c0 = tkinter.Canvas(root, width=bd_width, height=bd_height)
+        self.c0.pack()
+        self.id1 = self.c0.create_rectangle(10, 10, 20, 20, fill = 'red')
+        self.id3 = self.c0.create_rectangle(30, 30, 50, 50, fill = 'blue')
+        # バインディング
+        self.c0.tag_bind(self.id1, '<Button1-Motion>', self.rect_drag)
+        self.c0.tag_bind(self.id3, '<Double-Button-1>', self.move_rect)
+
+        root.mainloop()
+
+        # 移動-
+    def rect_drag(self,event):
+        #c0 = event.widget
+        x = event.x
+        y = event.y
+        self.c0.coords(self.id1, x - 5, y - 5, x + 5, y + 5)
+
+    def move_rect(self,event):
+        #c0 = event.widget
+        print("print move_rect")
+        self.id1 = self.c0.create_rectangle(10, 10, 20, 20, fill = 'red')
+
+    def callback(self,event):
+        print("callback")
 
 def main():
-    root = tkinter.Tk()
-    frame = tkinter.Frame(root, width=100, height=100)
-    frame.bind("<Enter>", callback)#マウスポインタ-がwidgetに入ったとき
-    frame.pack()
-
-    c0 = tkinter.Canvas(root, width = 200, height = 150)
-    c0.pack()
-    id = c0.create_rectangle(10, 10, 20, 20, fill = 'red')
-    # バインディング
-    c0.tag_bind(id, '<Button1-Motion>', rect_drag)
-    c0.tag_bind(id, '<Double-Button-1>', move_rect)
-    root.mainloop()
+    mind()
 
 if __name__ == "__main__":
     main()
