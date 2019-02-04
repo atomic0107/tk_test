@@ -98,6 +98,7 @@ class mind():
         self.temp_label["text"] = text
         print(text)
 
+
     def callback(self,event):
         print("callback")
 
