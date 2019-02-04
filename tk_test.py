@@ -78,6 +78,12 @@ class mind():
         #c0 = event.widget
         #print("print move_rect")
         print("#### edit label ####")
+        edit_x = event.widget.winfo_x()
+        edit_y = event.widget.winfo_y()
+        self.temp_label = event.widget
+        editbox = tkinter.Entry()
+        editbox.place( x = edit_x,y = edit_y )
+        editbox.bind( '<Return>', self.update_label )#enter key
         ##self.Static = tkinter.Label(text=u'test1')
         #self.Static.place(x=center_x/2 ,y=50)
         #self.labellist.append(self.Static2)
@@ -85,6 +91,12 @@ class mind():
         #self.Static.bind('<Double-Button-1>', self.create_label)
         #print(self.labellist[0].cget("text"))
         #print(self.labellist[1].cget("text"))
+
+    def update_label(self,event):
+        text = event.widget.get()
+        event.widget.destroy()
+        self.temp_label["text"] = text
+        print(text)
 
     def callback(self,event):
         print("callback")
