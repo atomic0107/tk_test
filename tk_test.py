@@ -83,14 +83,9 @@ class mind():
         self.temp_label = event.widget
         editbox = tkinter.Entry()
         editbox.place( x = edit_x,y = edit_y )
+        editbox.focus_set()#指定ウィジェットをアクティブにする
         editbox.bind( '<Return>', self.update_label )#enter key
-        ##self.Static = tkinter.Label(text=u'test1')
-        #self.Static.place(x=center_x/2 ,y=50)
-        #self.labellist.append(self.Static2)
-        #self.Static.bind('<Button1-Motion>', self.label_drag)
-        #self.Static.bind('<Double-Button-1>', self.create_label)
-        #print(self.labellist[0].cget("text"))
-        #print(self.labellist[1].cget("text"))
+        editbox.bind( '<Escape>', self.nop )#enter key
 
     def update_label(self,event):
         text = event.widget.get()
@@ -98,6 +93,8 @@ class mind():
         self.temp_label["text"] = text
         print(text)
 
+    def nop(self,event):
+        event.widget.destroy()
 
     def callback(self,event):
         print("callback")
