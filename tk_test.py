@@ -82,20 +82,22 @@ class mind():
         edit_y = event.widget.winfo_y()
         self.temp_label = event.widget
         editbox = tkinter.Entry()
+        editbox.insert(tkinter.START,self.temp_label["text"])
         editbox.place( x = edit_x,y = edit_y )
         editbox.focus_set()#指定ウィジェットをアクティブにする
         editbox.bind( '<Return>', self.update_label )#enter key
-        editbox.bind( '<Escape>', self.nop )#enter key
+        editbox.bind( '<Escape>', self.delete )#enter key
 
     def update_label(self,event):
         text = event.widget.get()
         event.widget.destroy()
         self.temp_label["text"] = text
         print(text)
-
-    def nop(self,event):
+        
+    def delete(self,event):
         event.widget.destroy()
-
+    def nop(self,event):
+        pass
     def callback(self,event):
         print("callback")
 
