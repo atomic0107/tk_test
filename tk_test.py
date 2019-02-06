@@ -144,14 +144,14 @@ class Main():
         """ レイアウトの作成 """
         #global tab_flag
         self.tab_flag = False
-        self.canv = tkinter.Canvas(root, width=bd_width, height=bd_height)
-        self.canv.pack()
-        self.id1 = self.canv.create_rectangle(10, 10, 20, 20, fill = 'red')
-        self.id3 = self.canv.create_rectangle(30, 30, 50, 50, fill = 'blue')
-        self.canv.tag_bind(self.id1, '<Button1-Motion>', self.rect_drag)
+        #self.canv = tkinter.Canvas(root, width=bd_width, height=bd_height)
+        #self.canv.pack()
+        #self.id1 = self.canv.create_rectangle(10, 10, 20, 20, fill = 'red')
+        #self.id3 = self.canv.create_rectangle(30, 30, 50, 50, fill = 'blue')
+        #self.canv.tag_bind(self.id1, '<Button1-Motion>', self.rect_drag)
         #self.canv.tag_bind(self.id1, '<Tab>', self.rect_create,"+")
-        self.canv.tag_bind(self.id3, '<Double-Button-1>', self.rect_create_red)
-        self.canv.tag_bind(self.id3, '<Button1-Motion>', self.rect_drag3)
+        #self.canv.tag_bind(self.id3, '<Double-Button-1>', self.rect_create_red)
+        #self.canv.tag_bind(self.id3, '<Button1-Motion>', self.rect_drag3)
         #self.canv.bind('<Tab>', self.tab_ev)
         root.bind('<Tab>', self.tab_ev)
         mind()
