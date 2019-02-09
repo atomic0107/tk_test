@@ -5,8 +5,6 @@ Created on 2019/01/29
 @author: tom_uda
 
 http://d.hatena.ne.jp/Cassiopeia/20070821/1187701922
-canvusに文字を描画あすることができる
-http://www.geocities.jp/m_hiroi/light/pytk03.html
 '''
 import tkinter
 import json
@@ -79,7 +77,7 @@ class mind():
         edit_y = event.widget.winfo_y()
         self.temp_label = event.widget
         editbox = tkinter.Entry()
-        editbox.insert( tkinter.END, self.temp_label["text"])
+        editbox.insert(tkinter.END,self.temp_label["text"])
         editbox.place( x = edit_x,y = edit_y )
         editbox.focus_set()#指定ウィジェットをアクティブにする
         editbox.bind( '<Return>', self.update_label )#enter key
@@ -160,15 +158,11 @@ class Main():
 
 
     def change_size(self,event):
-        global center_x
-        global center_y
         self.root_x = event.widget.winfo_width()
         self.root_y = event.widget.winfo_height()
-        center_x = self.root_x/2
-        center_y = self.root_y/2
         print(self.root_x/2)
         print(self.root_y/2)
-
+        
     def tab_ev(self,event):
         print("main tab")
         if mind.tab_flag == False:
