@@ -27,11 +27,11 @@ prime_cnt = 50
 #dict = json.load(json_t)
 
 dict = {
-    u"mind":None,
-    u"net":None,
-    u"IT":None,
-    u"swk":None,
-    u"tom":None
+    "関数":None,
+    "定義":None,
+    "構造体":None,
+    "列挙隊":None,
+    "テーブル":None
 }
 
 class mind():
@@ -39,7 +39,7 @@ class mind():
     cur_len = 0
     cur_x = center_x
     cur_y = center_y
-    tab_flag = 0
+    tab_flag = False
     #constractor
     def __init__(self):
         self.textobj_list = []
@@ -106,14 +106,14 @@ class mind():
         print(text)
 
     @classmethod
-    def cls_tab(clt,event):
+    def cls_tab(cls,event):
         print("mind tab")
-        if clt.tab_flag > 0 :
+        if cls.tab_flag > 0 :
             event.widget.destroy()
         clt.tab_flag = 1
 
     @classmethod
-    def write_label(clt,event):
+    def write_label(cls,event):
         text = event.widget.get()
         label_x = event.widget.winfo_x()
         label_y = event.widget.winfo_y()
@@ -121,6 +121,7 @@ class mind():
         Static = tkinter.Label(text=text)
         Static.place( x = label_x ,y = label_y )
         mind.cur_len += 1
+        cls.tab_flag = False#tabを確定
 
     @classmethod
     def cls_leave(cls,event):
@@ -142,58 +143,22 @@ class Main():
     def __init__(self,root):
         """ レイアウトの作成 """
         #global tab_flag
-        self.tab_flag = False
-        #self.canv = tkinter.Canvas(root, width=bd_width, height=bd_height)
-        #self.canv.pack()
-        #self.id1 = self.canv.create_rectangle(10, 10, 20, 20, fill = 'red')
-        #self.id3 = self.canv.create_rectangle(30, 30, 50, 50, fill = 'blue')
-        #self.canv.tag_bind(self.id1, '<Button1-Motion>', self.rect_drag)
-        #self.canv.tag_bind(self.id1, '<Tab>', self.rect_create,"+")
-        #self.canv.tag_bind(self.id3, '<Double-Button-1>', self.rect_create_red)
-        #self.canv.tag_bind(self.id3, '<Button1-Motion>', self.rect_drag3)
-        #self.canv.bind('<Tab>', self.tab_ev)
+        mind.tab_flag = False
         root.bind('<Tab>', self.tab_ev)
         root.bind('<Configure>', self.change_size)
         mind()
-
 
     def change_size(self,event):
         self.root_x = event.widget.winfo_width()
         self.root_y = event.widget.winfo_height()
         print(self.root_x/2)
         print(self.root_y/2)
-        
+
     def tab_ev(self,event):
-        print("main tab")
-        if self.tab_flag == False:
+        if mind.tab_flag == False:
+            print("create entry")
             mind.entry_label()
-            self.tab_flag = True
-
-        #self.Static = tkinter.Label(text=u'canv_tab')
-        #self.labellist.append(self.Static)
-        #self.Static.place(x=center_x/2 ,y=100)
-
-    def rect_drag(self,event):
-        #c0 = event.widget
-        x = event.x
-        y = event.y
-        self.canv.coords(self.id1, x - 5, y - 5, x + 5, y + 5)
-
-    def rect_drag3(self,event):
-        #c0 = event.widget
-        x = event.x
-        y = event.y
-        self.canv.coords(self.id3, x - 5, y - 5, x + 5, y + 5)
-
-    def rect_create(self,event):
-        #c0 = event.widget
-        print("print move_rect")
-        self.id1 = self.canv.create_rectangle(10, 10, 20, 20, fill = 'red')
-
-    def rect_create_red(self,event):
-        #c0 = event.widget
-        print("print move_rect")
-        self.id1 = self.canv.create_rectangle(10, 10, 20, 20, fill = 'red')
+            mind.tab_flag = True
 
 def main():
     root = tkinter.Tk()
