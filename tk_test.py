@@ -88,12 +88,12 @@ class mind():
     def entry_label(cls):
         editbox = tkinter.Entry()
         cls.cur_y = center_y + cls.cur_len * 25
-        #cls.tab_flag = 0
+        cls.tab_flag = 0
         editbox.place( x = cls.cur_x, y = cls.cur_y )
         editbox.focus_set()#指定ウィジェットをアクティブにする
         editbox.bind( '<Return>', cls.write_label )#enter key
         editbox.bind( '<Escape>', cls.cls_delete )#esc key
-        editbox.bind( '<Leave>', cls.cls_leave )#leave pointer
+        editbox.bind( '<Leave>', cls.cls_delete )#leave pointer
         editbox.bind( '<Tab>', cls.cls_tab )#tab key
         #cls.tab_flag += 1
         text = editbox.get()
@@ -106,23 +106,14 @@ class mind():
         print(text)
 
     @classmethod
-    def cls_tab(cls,event):
+    def cls_tab(clt,event):
         print("mind tab")
-        if cls.tab_flag > 0 :
+        if clt.tab_flag > 0 :
             event.widget.destroy()
-        else:
-            text = event.widget.get()
-            edit_x = event.widget.winfo_x()
-            edit_y = event.widget.winfo_y()
-            event.widget.destroy()
-            if(len(text) > 0):
-                Static = tkinter.Label(text=text)
-                Static.place( x = edit_x ,y = edit_y )
-                mind.cur_len += 1
-                cls.tab_flag = False
+        clt.tab_flag = 1
 
     @classmethod
-    def write_label(cls,event):
+    def write_label(clt,event):
         text = event.widget.get()
         label_x = event.widget.winfo_x()
         label_y = event.widget.winfo_y()
@@ -134,14 +125,12 @@ class mind():
     @classmethod
     def cls_leave(cls,event):
         event.widget.destroy()
-        cls.tab_flag = False
-        #mind.cur_len -= 1
+        mind.cur_len -= 1
 
     @classmethod
     def cls_delete(cls,event):
         event.widget.destroy()
-        cls.tab_flag = False
-        #mind.cur_len -= 1
+        mind.cur_len -= 1
 
     def nop(self,event):
         pass
@@ -151,7 +140,18 @@ class mind():
 
 class Main():
     def __init__(self,root):
+        """ レイアウトの作成 """
+        #global tab_flag
         self.tab_flag = False
+        #self.canv = tkinter.Canvas(root, width=bd_width, height=bd_height)
+        #self.canv.pack()
+        #self.id1 = self.canv.create_rectangle(10, 10, 20, 20, fill = 'red')
+        #self.id3 = self.canv.create_rectangle(30, 30, 50, 50, fill = 'blue')
+        #self.canv.tag_bind(self.id1, '<Button1-Motion>', self.rect_drag)
+        #self.canv.tag_bind(self.id1, '<Tab>', self.rect_create,"+")
+        #self.canv.tag_bind(self.id3, '<Double-Button-1>', self.rect_create_red)
+        #self.canv.tag_bind(self.id3, '<Button1-Motion>', self.rect_drag3)
+        #self.canv.bind('<Tab>', self.tab_ev)
         root.bind('<Tab>', self.tab_ev)
         root.bind('<Configure>', self.change_size)
         mind()
@@ -165,8 +165,35 @@ class Main():
         
     def tab_ev(self,event):
         print("main tab")
-        if mind.tab_flag == False:
+        if self.tab_flag == False:
             mind.entry_label()
+            self.tab_flag = True
+
+        #self.Static = tkinter.Label(text=u'canv_tab')
+        #self.labellist.append(self.Static)
+        #self.Static.place(x=center_x/2 ,y=100)
+
+    def rect_drag(self,event):
+        #c0 = event.widget
+        x = event.x
+        y = event.y
+        self.canv.coords(self.id1, x - 5, y - 5, x + 5, y + 5)
+
+    def rect_drag3(self,event):
+        #c0 = event.widget
+        x = event.x
+        y = event.y
+        self.canv.coords(self.id3, x - 5, y - 5, x + 5, y + 5)
+
+    def rect_create(self,event):
+        #c0 = event.widget
+        print("print move_rect")
+        self.id1 = self.canv.create_rectangle(10, 10, 20, 20, fill = 'red')
+
+    def rect_create_red(self,event):
+        #c0 = event.widget
+        print("print move_rect")
+        self.id1 = self.canv.create_rectangle(10, 10, 20, 20, fill = 'red')
 
 def main():
     root = tkinter.Tk()
