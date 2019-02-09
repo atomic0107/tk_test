@@ -7,7 +7,6 @@ Created on 2019/01/29
 http://d.hatena.ne.jp/Cassiopeia/20070821/1187701922
 canvusに文字を描画あすることができる
 http://www.geocities.jp/m_hiroi/light/pytk03.html
-http://www.shido.info/py/tkinter12.html
 '''
 import tkinter
 import json
@@ -30,11 +29,11 @@ prime_cnt = 50
 #dict = json.load(json_t)
 
 dict = {
-    "関数名":None,
-    "列挙体名":None,
-    "構造体名":None,
-    "定義名":None,
-    "テーブル名":None
+    u"mind":None,
+    u"net":None,
+    u"IT":None,
+    u"swk":None,
+    u"tom":None
 }
 
 class mind():
@@ -44,57 +43,49 @@ class mind():
     cur_y = center_y
     tab_flag = 0
     #constractor
-    def __init__(self,canv):
+    def __init__(self):
         self.textobj_list = []
         self.textbox_list = []
         self.textbox_cnt = 0
         self.labellist=[]
         self.x = mind.cur_x
         self.y = mind.cur_y
-        self.canv = canv
         self.dict_list = list(dict.keys())
         mind.cur_len = len(self.dict_list)
         #dict_len = len(self.dict_list)
         for text_cnt in range( mind.cur_len ):
             self.y = center_y + text_cnt * 25
             self.x = center_x
-            self.text = canv.create_text(self.x,self.y,text = self.dict_list[text_cnt])
-            #self.Static = tkinter.Label( text = self.dict_list[text_cnt] )
-            #self.Static.bind('<Button-1>', self.click_label)#click
+            self.Static = tkinter.Label( text = self.dict_list[text_cnt] )
+            self.Static.bind('<Button-1>', self.click_label)#click
             #self.Static.bind('<Button1-Motion>', self.label_drag)
-            #self.Static.bind('<Double-Button-1>', self.edit_label)#double click
-            self.canv.tag_bind(self.text,'<Double-Button-1>',self.edit_label)
-            self.canv.tag_bind(self.text,'<Button-1>',self.click_label)
-            self.canv.tag_bind(self.text,'<Button1-Motion>',self.move_text)
-            self.labellist.append(self.text)
-            #self.Static.place( x = self.x ,y = self.y )
-            #print(self.labellist[text_cnt].cget("text"))#MAP要素をプリント
+            self.Static.bind('<Double-Button-1>', self.edit_label)#double click
+            self.labellist.append( self.Static )
+            self.Static.place( x = self.x ,y = self.y )
+            print(self.labellist[text_cnt].cget("text"))#MAP要素をプリント
         #mind.cur_x = self.x
         #mind.cur_y = self.y
 
-    def move_text(self,event):
-        x = event.x
-        y = event.y
-        self.canv.coords(id, x - 5, y - 5, x + 5, y + 5)
-        
     def click_label(self,event):
         print(event.widget["text"])
         print(event.widget.winfo_x())
         print(event.widget.winfo_y())
-        
+
     def edit_label(self,event):
+        #c0 = event.widget
+        #print("print move_rect")
         print("#### edit label ####")
         edit_x = event.widget.winfo_x()
         edit_y = event.widget.winfo_y()
         self.temp_label = event.widget
         editbox = tkinter.Entry()
-        editbox.insert( tkinter.END, self.temp_label.get)
+        editbox.insert( tkinter.END, self.temp_label["text"])
         editbox.place( x = edit_x,y = edit_y )
         editbox.focus_set()#指定ウィジェットをアクティブにする
         editbox.bind( '<Return>', self.update_label )#enter key
         editbox.bind( '<Escape>', self.cls_delete )#esc key
         editbox.bind( '<Leave>', self.cls_leave )#widget leave
-        
+
     @classmethod
     def entry_label(cls):
         editbox = tkinter.Entry()
@@ -165,9 +156,7 @@ class Main():
         self.tab_flag = False
         root.bind('<Tab>', self.tab_ev)
         root.bind('<Configure>', self.change_size)
-        canv = tkinter.Canvas(root, width = bd_width, height = bd_height)
-        canv.pack()
-        mind(canv)
+        mind()
 
 
     def change_size(self,event):
