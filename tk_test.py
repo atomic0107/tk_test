@@ -98,19 +98,13 @@ class mind():
         #cls.tab_flag += 1
         text = editbox.get()
         print(text)
-
-    def update_label(self,event):
-        text = event.widget.get()
-        event.widget.destroy()
-        self.temp_label["text"] = text
-        print(text)
-
+        
     @classmethod
     def cls_tab(cls,event):
         print("mind tab")
-        if cls.tab_flag > 0 :
+        if cls.tab_flag == False:#tab unpressed case 
             event.widget.destroy()
-        clt.tab_flag = 1
+        cls.tab_flag = 1
 
     @classmethod
     def write_label(cls,event):
@@ -121,7 +115,7 @@ class mind():
         Static = tkinter.Label(text=text)
         Static.place( x = label_x ,y = label_y )
         mind.cur_len += 1
-        cls.tab_flag = False#tabを確定
+        cls.tab_flag = False#tab unpressed
 
     @classmethod
     def cls_leave(cls,event):
@@ -132,6 +126,12 @@ class mind():
     def cls_delete(cls,event):
         event.widget.destroy()
         mind.cur_len -= 1
+
+    def update_label(self,event):
+        text = event.widget.get()
+        event.widget.destroy()
+        self.temp_label["text"] = text
+        print(text)
 
     def nop(self,event):
         pass
@@ -158,7 +158,7 @@ class Main():
         if mind.tab_flag == False:
             print("create entry")
             mind.entry_label()
-            mind.tab_flag = True
+            mind.tab_flag = True#tab pressed
 
 def main():
     root = tkinter.Tk()
