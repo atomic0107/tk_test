@@ -139,7 +139,6 @@ class mind():
         print("callback")
 
 class Main():
-
     def __init__(self,root):
         """ レイアウトの作成 """
         #global tab_flag
@@ -154,8 +153,16 @@ class Main():
         #self.canv.tag_bind(self.id3, '<Button1-Motion>', self.rect_drag3)
         #self.canv.bind('<Tab>', self.tab_ev)
         root.bind('<Tab>', self.tab_ev)
+        root.bind('<Configure>', self.change_size)
         mind()
 
+
+    def change_size(self,event):
+        self.root_x = event.widget.winfo_width()
+        self.root_y = event.widget.winfo_height()
+        print(self.root_x/2)
+        print(self.root_y/2)
+        
     def tab_ev(self,event):
         print("main tab")
         if self.tab_flag == False:
