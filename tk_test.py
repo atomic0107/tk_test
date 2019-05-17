@@ -163,7 +163,7 @@ class Main():
 
 def main():
     root = tkinter.Tk()
-    root.title(u"Software Title")
+    root.title("tkinter test")
     root.geometry("500x500")
     Main(root)
     root.mainloop()
